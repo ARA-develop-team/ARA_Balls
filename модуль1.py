@@ -1,8 +1,8 @@
 import pygame
 
-def check_cube (xz, yz, rx, ry,):
+#def check_cube (xz, yz, rx, ry,):
 
-def check_sq (xz, yz, rx, ry, ):
+#def check_sq (xz, yz, rx, ry, ):
 
 pygame.init()
 
@@ -31,7 +31,7 @@ while run:
     if keys[pygame.K_SPACE]:
         action = True
 
-    if  check_cube (xz, yz, rx, ry,) = True
+   # if  check_cube (xz, yz, rx, ry,) = True
         num -= 1
 
 
