@@ -24,13 +24,17 @@ class Circle:
     def move(self, v_x, v_y, screen_x, screen_y):
         if self.x_b >= screen_x - self.radius or self.x_b <= 0 + self.radius:
             v_x = -v_x
+            start_move = True
         if self.y_b <= 0 + self.radius:
             v_y = -v_y
+            start_move = True
         if self.y_b >= screen_y - self.radius:
             start_move = False
         self.x_b += int(v_x)
         self.y_b += int(v_y)
         return start_move, self.x_b, self.y_b
+    def draw_c(self, screen, x_b, y_b,):
+        pygame.draw.circle(screen, self.color_b, (x_b, y_b), self.radius, self.wight)
 
 
 class rect:
@@ -41,14 +45,21 @@ class rect:
         self.height_c = 50
         self.color_c = (106, 90, 205)
 
-
+pygame.init()
 """variable"""
 screen_x = 500
 screen_y = 500
+radius = 20
+start_move = False
 run = True
 ball = []
 x_b = int(screen_x / 2)
 y_b = int(screen_y - radius - 20)
+
+my_fond = pygame.font.SysFont('monospace', 15)
+window = pygame.display.set_mode((screen_x, screen_y))
+screen = pygame.Surface((screen_x, screen_y))
+
 for x in range(0, 4):
     ball.append(Circle(x_b, y_b))
 
@@ -64,11 +75,18 @@ while run:
             if e.button == 1:
                 k_pos = e.pos
                 v_x, v_y = ball[1].vector(k_pos)
+                print(v_x, v_y)
                 start_move = True
 
     if start_move:
         for one in ball:
+            print('ok')
             start_move, x_b, y_b = one.move(v_x, v_y, screen_x, screen_y)
+            one.draw_c(screen, x_b, y_b,)
+    screen.fill((47, 79, 79))
+    window.blit(screen, (0, 0))
+    pygame.display.update()
+pygame.quit
 
 # global start_move
 # global collision
