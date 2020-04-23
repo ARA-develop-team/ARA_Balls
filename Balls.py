@@ -2,8 +2,12 @@ import pygame
 import random
 import math
 
-
-pygame.init()
+global start_move
+global collision
+global x_b
+global y_b
+global v_x
+global v_y
 
 screen_x = 500
 screen_y = 500
@@ -14,6 +18,13 @@ vv2 = [0, 0]
 collision = 0
 v_x = 0
 v_y = 0
+
+#парамтры квадрата
+x_c = 100
+y_c = 100
+wight_c = 50
+hight_c = 50
+
 #параметры шара
 radius = 20
 wight = 20
@@ -22,32 +33,38 @@ y_b = int(screen_y - radius - 20)
 #x_b = random.randint(0 + radius, screen_x - radius)
 #y_b = random.randint(0 + radius, screen_y - radius)
 speed = 10
-color_b = (2, 100, 135)
+color_b = (240, 230, 140)
 
 
-my_fond = pygame.font.SysFont('monospace', 15)
-window = pygame.display.set_mode((screen_x, screen_y))
-screen = pygame.Surface((screen_x, screen_y))
+
 
 start_move = False
 run = True
 
 
+pygame.init()
+my_fond = pygame.font.SysFont('monospace', 15)
+window = pygame.display.set_mode((screen_x, screen_y))
+screen = pygame.Surface((screen_x, screen_y))
+
+
 def move():
-    global collision
     global x_b
     global y_b
     global v_x
     global v_y
-
+    global collision
+    global start_move
     x_b += int(v_x)
     y_b += int(v_y)
     if x_b >= screen_x - radius or x_b <= 0 + radius:
         v_x = -v_x 
         collision += 1
-    if y_b >= screen_y - radius or y_b <= 0 + radius:
+    if y_b <= 0 + radius:
         collision += 1
         v_y = -v_y
+    if y_b >= screen_y - radius:
+        start_move = False
 def vector():
     global v_x
     global v_y
@@ -64,6 +81,7 @@ def vector():
     vv[1] = v_y
 
 
+
 while run:
     pygame.time.delay(15)
     for e in pygame.event.get():
@@ -77,8 +95,9 @@ while run:
                 vector()
                 start_move = True
                 
-    screen.fill((10, 50, 10))
+    screen.fill((47, 79, 79))
     pygame.draw.circle(screen, color_b, (x_b, y_b), radius, wight)
+    pygame.draw.rect(screen, color_b, (x_c, y_c, wight_c, hight_c))
     #string = my_fond.render('x = '+str(x_b) + ' y = ' + str(y_b), 0, (255, 0, 0))
     string = my_fond.render(str(vv2), 0, (255, 0, 0))
     string_2 = my_fond.render(str(vv), 0, (255, 0, 0))
@@ -86,12 +105,11 @@ while run:
     screen.blit(string_2, (200, 40))
     if start_move:
         move()
-        if collision == 5:
-            collision = 0
-            x_b = int(screen_x / 2)
-            y_b = int(screen_y - radius - 10)
-            start_move = False
+        #if collision == 5:
+            #collision = 0
+            #start_move = False
     window.blit(screen, (0, 0))
     pygame.display.update()
     #pygame.display.flip()
+    
 pygame.quit
