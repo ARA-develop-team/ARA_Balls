@@ -74,12 +74,13 @@ while run:
         if e.type == pygame.MOUSEBUTTONUP:
             if e.button == 1:
                 k_pos = e.pos
-                v_x, v_y = ball[1].vector(k_pos)
+                v_x, v_y = ball[0].vector(k_pos)
                 print(v_x, v_y)
                 start_move = True
 
     if start_move:
         for one in ball:
+            start_move = True
             print('ok')
             start_move, x_b, y_b = one.move(v_x, v_y, screen_x, screen_y)
             one.draw_c(screen, x_b, y_b,)
